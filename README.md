@@ -25,10 +25,6 @@ retrieve -> grade_relevance -> [route]
 - **generate_from_web** — answers from web results, clearly flagged in the
   UI as "answered from live web search" rather than the docs.
 
-This is a different LangGraph *shape* than the Data Analyst Agent project —
-conditional routing based on a relevance judgment, rather than a
-generate/execute/retry loop. Worth mentioning together on a resume to show
-you understand more than one agent pattern.
 
 ## Setup
 
@@ -61,43 +57,20 @@ This fetches the curated LangGraph/LangSmith doc pages listed at the top of
 `./chroma_db`. Takes about a minute. Re-run it any time you add more URLs
 to the `DOC_URLS` list.
 
-## Verify the graph wiring (no API calls, free)
 
-```bash
-python test_agent_wiring.py
-```
+Try it live : https://langgraph-rag-docs-assistant-kappsu9xdi3afbducugs3wd.streamlit.app/
 
-This tests **both** branches — docs-sufficient and web-fallback — using
-fake components, so you can confirm the routing logic works before
-spending real API calls on it.
+DEMO:
+Returning the data found in documents
+<img width="797" height="510" alt="image" src="https://github.com/user-attachments/assets/f29839ad-7fce-4a7b-9909-feb10759b599" />
 
-## Run it
+Returning data from teh web search:
+<img width="827" height="327" alt="image" src="https://github.com/user-attachments/assets/ad52b342-6f32-437e-bd60-338376511465" />
 
-```bash
-streamlit run app.py
-```
 
-Try:
-- *"What is a StateGraph in LangGraph?"* → should answer from docs
-- *"What's the latest LangGraph release version?"* → likely falls back to
-  web search, since doc snapshots go stale but the web doesn't
-- Open **🔍 What the agent retrieved** to see the actual chunks it pulled
 
-## Deploying to Streamlit Community Cloud
 
-1. Push to GitHub (`.env` and `chroma_db/` are gitignored — they won't be
-   committed, which is intentional: don't commit API keys or a large binary
-   vector store).
-2. On [share.streamlit.io](https://share.streamlit.io), create a new app
-   pointing at `app.py`.
-3. In **Secrets**, add both:
-   ```
-   OPENAI_API_KEY = "sk-..."
-   TAVILY_API_KEY = "tvly-..."
-   ```
-4. Deploy. On first load, the app automatically builds the vector store
-   itself (see the `if not os.path.exists("./chroma_db")` block in
-   `app.py`) — no manual `ingest.py` step needed on the server.
+
 
 
 
