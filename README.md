@@ -99,21 +99,9 @@ Try:
    itself (see the `if not os.path.exists("./chroma_db")` block in
    `app.py`) — no manual `ingest.py` step needed on the server.
 
-## Known limitations (good interview talking points)
 
-- **Chroma storage isn't persistent across Streamlit Cloud redeploys** —
-  each redeploy rebuilds the index from scratch on first load. Fine for a
-  demo; a production version would use a hosted vector DB or persistent
-  volume.
-- **The relevance grader is a single LLM call with no confidence score** —
-  it's a binary yes/no, not a nuanced ranking. A more advanced version
-  could re-rank retrieved chunks or ask the grader to cite *which* chunk
-  helped.
-- **No conversation memory** — every question is independent; a follow-up
-  like "can you give an example of that" won't know what "that" refers to.
-- **The curated URL list is small on purpose** (~12 pages) to keep the demo
-  fast and cheap. Expanding `DOC_URLS` in `ingest.py` deepens the knowledge
-  base at the cost of a longer ingest run.
+
+
 
 ## Suggested resume line
 
